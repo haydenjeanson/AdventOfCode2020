@@ -13,3 +13,10 @@ def file_to_text(filename):
     contents = infile.read()
     infile.close()
     return contents
+
+
+def get_lines(filename):
+    input_text = file_to_text(filename)
+    lines = input_text.split('\n')
+    lines.pop()
+    return lines

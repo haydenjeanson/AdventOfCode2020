@@ -2,9 +2,7 @@
 import utilities
 
 
-input_text = utilities.file_to_text('Day2/input.txt')
-lines = input_text.split('\n')
-lines.pop()
+lines = utilities.get_lines('Day2/input.txt')
 
 
 def part1():

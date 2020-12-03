@@ -25,9 +25,7 @@ def part2():
     return 'Failed'
 
 
-input_text = utilities.file_to_text('Day1/input.txt')
-lines = input_text.split('\n')
-lines.pop()
+lines = utilities.get_lines('Day1/input.txt')
 
 print(part1())
 print(part2())

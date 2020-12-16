@@ -1,18 +1,17 @@
 import utilities
 
 lines = utilities.get_lines('Day10/input.txt')
-print(len(lines))
 
 for i in range(len(lines)):
     lines[i] = int(lines[i])
 
-adapters = lines.copy()
-adapters.sort()
-adapters.append(adapters[-1] + 3)
-print(adapters)
 
+def part1():
 
-def part1(adapters):
+    adapters = lines.copy()
+    adapters.sort()
+    adapters.append(adapters[-1] + 3)
+
     differences = [0, 0, 0]
 
     current_jolts = 0
@@ -27,56 +26,29 @@ def part1(adapters):
 
 
 def part2():
+    adapters = lines.copy()
+    adapters.append(0)
+    adapters.sort()
+    adapters.append(adapters[-1] + 3)
 
-    class Node:
-        def __init__(self, value):
-            self.value = value
-            self.children = []
-
-        def add_child(self, child):
-            self.children.append(child)
-
-    def DFS(current):
-        num_paths = 0
-
-        if not current in visited:
-            if current.value == end:
-                num_paths = 1
+    paths = [1, 1, 1]
+    for i in range(1, len(adapters)):
+        parents = [adapters[i-3], adapters[i-2], adapters[i-1]]
+        for j in range(3):
+            if parents[j] < adapters[i] and adapters[i] - parents[j] <= 3:
+                parents[j] = 1
             else:
-                for child in current.children:
-                    num_paths += DFS(child)
-            visited.append(current)
+                parents[j] = 0
 
-        return num_paths
+        paths.append(paths[0]*parents[0] + paths[1] *
+                     parents[1] + paths[2]*parents[2])
+        paths = paths[1:]
 
-    head = Node(0)
-
-    for value in adapters:
-        if value <= 3:
-            head.add_child(Node(value))
-            print(value)
-        else:
-            print(value)
-            break
-    print(head.children[-1].value)
-
-    def setupGraph(current):
-        for child in current.children:
-            start = adapters.index(child.value) + 1
-            for value in adapters[start:]:
-                if value - child.value <= 3:
-                    child.add_child(Node(value))
-                else:
-                    break
-            setupGraph(child)
-
-    setupGraph(head)
-
-    visited = []
-    end = adapters[-1]
-
-    print(DFS(head))
+    print(paths[-1])
+    return paths[-1]
 
 
-part1(adapters)
+print('--- Part 1 ---')
+part1()
+print('--- Part 2 ---')
 part2()
